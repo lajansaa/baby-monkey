@@ -63,6 +63,14 @@ $(document).keydown(function(key) {
   }
 })
 
+$("#left-arrow").on("mousedown", function() {
+    keyDown("left");
+})
+
+$("#left-arrow").on("mouseup", function() {
+    keyUp("left");
+})
+
 $(document).keyup(function(key) {
   if (key.which == 37) {
     keyUp("left");
@@ -70,4 +78,12 @@ $(document).keyup(function(key) {
   if (key.which == 39) {
     keyUp("right");
   }
+})
+
+$("#right-arrow").on("mousedown", function() {
+    keyDown("right");
+})
+
+$("#right-arrow").on("mouseup", function() {
+    keyUp("right");
 })
