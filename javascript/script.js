@@ -1,7 +1,8 @@
 var running = false;
 var playerScore = 0;
 var timeObj = {"time_left": 5000,
-               "time_total": 10000
+               "time_total": 10000,
+               "time_decay": 350
               }
 var reduceTime;
 
@@ -53,8 +54,13 @@ function start() {
 
   $("#progress").width("50%");
   timeObj = {"time_left": 5000,
-             "time_total": 10000
+             "time_total": 10000,
+             "time_decay": 350
             }
+  $("#progress").css("background-color", "green");
+  $("#monkey-left").hide(); 
+  $("#monkey-right").hide(); 
+  $("#monkey-start").show();            
   $("#game-start").hide();
   $("#game-over").hide();
   $("#game-running").show();
@@ -80,14 +86,30 @@ function keyUp(key) {
 
 function keyDown(key) {
   $("#" + key + "-arrow").css("transform", "scale(0.9)");
-  var lastSegmentDirection = $("#tree").children().last().attr("class")
+  if (playerScore == 0) {
+    var lastSegmentDirection = $("#tree").children().last().attr("class")
+  } else {
+    var lastSegmentDirection = $("#tree").children().eq(6).attr("class")
+  }
   if (lastSegmentDirection == key) {
     if (playerScore == 0) {
       progress($("#progress"));
+      $("#monkey-start").hide();
+    } else {
+      $("#tree").children().last().remove();
     }
-    //move to second last branch
-    // then remove the last branch
-    $("#tree").children().last().remove();
+
+    if (playerScore % 20 == 19) {
+      timeObj.time_decay += 50;
+    }
+
+    if (key == "left") {
+      $("#monkey-right").hide();
+      $("#monkey-left").show();
+    } else {
+      $("#monkey-left").hide();
+      $("#monkey-right").show();
+    }
     createRandomTreeSegment("prepend");
     playerScore++;
     $("#score").text(playerScore);
@@ -100,7 +122,7 @@ function keyDown(key) {
 }
 
 $(document).keydown(function(key) {
-  if (running = true) {
+  if (running == true) {
     if (key.which == 37) {
       keyDown("left");
     }
@@ -111,7 +133,7 @@ $(document).keydown(function(key) {
 })
 
 $("#left-arrow").on("mousedown", function() {
-  if (running = true) {
+  if (running == true) {
     keyDown("left");
   }
 })
@@ -121,7 +143,7 @@ $("#left-arrow").on("mouseup", function() {
 })
 
 $(document).keyup(function(key) {
-  if (running = true) {
+  if (running == true) {
     if (key.which == 37) {
       keyUp("left");
     }
@@ -132,27 +154,29 @@ $(document).keyup(function(key) {
 })
 
 $("#right-arrow").on("mousedown", function() {
-  if (running = true) {
+  if (running == true) {
     keyDown("right");
   }
 })
 
 $("#right-arrow").on("mouseup", function() {
-  if (running = true) {
+  if (running == true) {
     keyUp("right");
   }
 })
 
-// progress bar
 function progress($animatedElement) {
-  timeObj.time_left -= 250;
-  var progressBarWidth = timeObj.time_left * 100 / timeObj.time_total;
+  timeObj.time_left -= timeObj.time_decay;
+  var percentageRemain = timeObj.time_left / timeObj.time_total
+  var progressBarWidth = percentageRemain * 100;
+  if (percentageRemain >= 0.30) {
+    $animatedElement.css("background-color", "green");
+  } else {
+    $animatedElement.css("background-color", "red");
+  }
   $animatedElement.width(progressBarWidth);
   if (timeObj.time_left > 0) {
     reduceTime = setTimeout(function() {
-      console.log("time left from recursion: " + timeObj.time_left);
-      // console.log("width: " + progressBarWidth);
-      // timeObj.time_left -= 1;
       progress($animatedElement);
     }, 50);
   }

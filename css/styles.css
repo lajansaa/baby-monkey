@@ -70,19 +70,52 @@ body {
   margin: 0;
 }
 
+/*user action*/
+
 #left-arrow, #right-arrow {
   display: inline-block;
   width: 0;
   height: 0;
-  border-top: 50px solid transparent;
-  border-bottom: 50px solid transparent;
-  margin: 30px;
+  border-top: 40px solid transparent;
+  border-bottom: 40px solid transparent;
+  margin: 150px 30px 0 30px;
 }
 
 #left-arrow {
-  border-right: 100px solid black;
+  border-right: 80px solid black;
 }
 
 #right-arrow {
-  border-left: 100px solid black;
+  border-left: 80px solid black;
+}
+
+#monkey-start, #monkey-left, #monkey-right {
+  background: url("../img/monkey-start.jpg") no-repeat;
+  background-size: contain;
+  margin: 0 auto;  
+  position: absolute;
+  width: 100px;
+  height: 150px;
+}
+
+#monkey-start {
+  transform: translate(-50%, -50%);
+  bottom: 10px;
+  left: 50%;
+}
+
+#monkey-left {
+  bottom: 309px;
+  left: 20%;
+  display: none;
+}
+
+#monkey-right {
+  bottom: 309px;
+  right: 20%;
+  display: none;
+}  
+
+#game-running, #game-over {
+  display: none;
 }
