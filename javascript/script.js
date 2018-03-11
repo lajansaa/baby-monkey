@@ -6,16 +6,24 @@ var timeObj = {"time_left": 5000,
               }
 var reduceTime;
 
-// creation of tree segments
 function createTreeSegment(direction) {
   var divElement = $("<div>", {"class": direction});
-  var branchElement = $("<div>", {"class": "branch"}).html("&nbsp;");
+  var branchWrapperElement = $("<div>", {"class": "branch-wrapper"});
+  var bananaElement = $("<div>", {"class": "banana-placeholder"});
+  if (playerScore > 20) {
+    var randomNumber = Math.floor(Math.random() * 4);
+    if (randomNumber == 0) {
+      bananaElement.addClass("banana");
+    }
+  }
+  var branchElement = $("<div>", {"class": "branch"});
+  branchWrapperElement.append(bananaElement).append(branchElement);
   var emptyBranchElement = $("<div>", {"class": "empty-branch"}).html("&nbsp;");
   var trunkElement = $("<div>", {"class": "trunk"}).html("&nbsp;");
   if (direction == "left") {
-    var treeSegmentElement = divElement.append([branchElement, trunkElement, emptyBranchElement]);
+    var treeSegmentElement = divElement.append([branchWrapperElement, trunkElement, emptyBranchElement]);
   } else {
-    var treeSegmentElement = divElement.append([emptyBranchElement, trunkElement, branchElement]);
+    var treeSegmentElement = divElement.append([emptyBranchElement, trunkElement, branchWrapperElement]);
   }
   return treeSegmentElement;
 }
@@ -74,7 +82,6 @@ function gameOver() {
 }
 
 function increaseTime() {
-  // clearInterval(reduceTime);
   console.log("time left from increaseTime(): " + timeObj.time_left);
   timeObj.time_left = Math.min(timeObj.time_left + 2000, timeObj.time_total);
   $("#progress").width(Math.min(100,$("#progress").width() + 10));
@@ -89,7 +96,7 @@ function keyDown(key) {
   if (playerScore == 0) {
     var lastSegmentDirection = $("#tree").children().last().attr("class")
   } else {
-    var lastSegmentDirection = $("#tree").children().eq(6).attr("class")
+    var lastSegmentDirection = $("#tree").children().eq(5).attr("class")
   }
   if (lastSegmentDirection == key) {
     if (playerScore == 0) {
@@ -110,14 +117,17 @@ function keyDown(key) {
       $("#monkey-left").hide();
       $("#monkey-right").show();
     }
-    createRandomTreeSegment("prepend");
+    
+    if (playerScore > 0) {
+      createRandomTreeSegment("prepend");
+    }
     playerScore++;
     $("#score").text(playerScore);
     if (timeObj.time_left <= timeObj.time_total) {
       increaseTime();
     }
   } else {
-    gameOver();
+    // gameOver();
   }
 }
 
@@ -181,6 +191,8 @@ function progress($animatedElement) {
     }, 50);
   }
   else {
-    gameOver();
+    // gameOver();
   }
 }
+
+start()

@@ -53,11 +53,27 @@ body {
   display: inline-block;
 }
 
-.branch {
+.branch-wrapper {
   width: 150px;
+  display: inline-block;
+  height: 0px;
+}
+
+.branch {
+  width: 100%;
   height: 15px;
   background-color: brown;
-  display: inline-block;
+}
+
+.banana-placeholder {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+.banana {
+  background: url("../img/banana.jpg") no-repeat;
+  background-size: contain;
 }
 
 .empty-branch {
@@ -105,17 +121,17 @@ body {
 }
 
 #monkey-left {
-  bottom: 309px;
-  left: 20%;
+  bottom: 250px;
+  left: 35%;
   display: none;
 }
 
 #monkey-right {
-  bottom: 309px;
-  right: 20%;
+  bottom: 250px;
+  right: 35%;
   display: none;
 }  
 
-#game-running, #game-over {
+#game-over {
   display: none;
 }
