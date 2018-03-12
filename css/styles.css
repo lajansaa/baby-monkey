@@ -136,6 +136,13 @@ body {
   height: 80px;
   background-color: black;
   display: inline-block;
+  vertical-align: top;
+}
+
+#spacebar p {
+  color: white;
+  line-height: 80px;
+  margin: 0;
 }
 
 /* monkey image */

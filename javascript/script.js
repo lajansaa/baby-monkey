@@ -1,10 +1,9 @@
 var running = false;
 var playerScore = 0;
-var timeObj = {"time_left": 5000,
-               "time_total": 10000,
-               "time_decay": 350
-              }
-var reduceTime;
+var addBananaThreshold = 20;
+var progressMin = 98;
+var level = 0;
+var timeObj;
 
 function createTreeSegment(direction) {
   var divElement = $("<div>", {"class": direction});
@@ -12,7 +11,8 @@ function createTreeSegment(direction) {
   var bananaElement = $("<div>", {"class": "banana-placeholder"});
   
   // randomise adding of banana class
-  if (playerScore > 20) {
+  // only when user points passes a certain threshold
+  if (playerScore > addBananaThreshold) {
     var randomNumber = Math.floor(Math.random() * 4);
     if (randomNumber == 0) {
       bananaElement.addClass("banana");
@@ -66,12 +66,13 @@ function startGame() {
 
   playerScore = 0;
   $("#score").text(playerScore);
-  // $("#score").append("<div class=\"bonus-points\">+2</div>");
 
   $("#progress").width("50%");
   timeObj = {"time_left": 5000,
              "time_total": 10000,
-             "time_decay": 350
+             "time_decay": 300,
+             "time_decay_threshold": 30,
+             "time_decay_factor": 50
             }
   $("#progress").css("background-color", "green");
 
@@ -124,8 +125,10 @@ function userAction(key) {
     }
 
     // increase time decay for every 20 points
-    if (playerScore % 20 == 19) {
-      timeObj.time_decay += 50;
+    if (playerScore % timeObj.time_decay_threshold == timeObj.time_decay_threshold - 1) {
+      timeObj.time_decay += timeObj.time_decay_factor;
+      level++;
+      flashLevel(level);
     }
 
     // show and hide monkey depending on user action
@@ -226,7 +229,7 @@ $("#spacebar").on("mouseup", function() {
 
 // increase time when user makes correct move
 function increaseTime() {  timeObj.time_left = Math.min(timeObj.time_left + 2000, timeObj.time_total);
-  $("#progress").width(Math.min(100,$("#progress").width() + 10));
+  $("#progress").width(Math.min(progressMin, $("#progress").width() + 10));
 }
 
 // decrease time 
@@ -241,7 +244,7 @@ function progress() {
   }
   $("#progress").width(progressBarWidth);
   if (timeObj.time_left > 0) {
-    reduceTime = setTimeout(function() {
+    setTimeout(function() {
       progress();
     }, 50);
   }
@@ -251,17 +254,27 @@ function progress() {
 }
 
 function bubbleBonusPoints() {
-  console.log("appending score");
   $("#score-wrapper").append("<div class=\"bonus-points\">+2</div>");
   var angle = Math.floor(Math.random() * 50) + 50;
   // animate each bonus point to the top (bottom 100%) and reduce opacity as it moves
   // callback function used to remove complete animations
-  console.log("animating");
   $(".bonus-points").animate({
       "top": "-80px",
       "left": (15 + angle) + "px",
       "opacity" : "-=0.7"
-  }, 2000);    
+  }, 2000, function() {
+    $(this).remove();
+  });    
+}
+
+function flashLevel(level) {
+  $("#score-wrapper").append("<div class=\"level\"></div>")
+  $(".level").text("LEVEL " + level).fadeIn();
+  setTimeout(function() {
+    $(".level").fadeOut(function() {
+      $(this).remove();
+    });
+  }, 1000);
 }
 
 startGame()
