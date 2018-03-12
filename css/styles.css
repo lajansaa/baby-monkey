@@ -42,7 +42,7 @@ body {
   background-color: green;
 }
 
-/* creation of tree segments */
+/* tree segments */
 .trunk {
   width: 150px;
   height: 80px;
@@ -51,12 +51,21 @@ body {
   border-left: 5px solid black;
   background-color: brown;
   display: inline-block;
+  /* inline element displays weird behavior
+     if element has no content.
+     user vertical-align to control alignment
+  */
+  vertical-align: bottom;
 }
 
 .branch-wrapper {
   width: 150px;
   display: inline-block;
-  height: 0px;
+  /* inline element displays weird behavior
+     if element has no content.
+     user vertical-align to control alignment
+  */
+  vertical-align: bottom;
 }
 
 .branch {
@@ -80,14 +89,18 @@ body {
   width: 150px;
   height: 15px;
   display: inline-block;
+  /* inline element displays weird behavior
+     if element has no content.
+     user vertical-align to control alignment
+  */
+  vertical-align: bottom;
 }
 
 .left-branch, .right-branch {
   margin: 0;
 }
 
-/*user action*/
-
+/* user actions */
 #left-arrow, #right-arrow {
   display: inline-block;
   width: 0;
@@ -105,6 +118,7 @@ body {
   border-left: 80px solid black;
 }
 
+/* monkey image */
 #monkey-start, #monkey-left, #monkey-right {
   background: url("../img/monkey-start.jpg") no-repeat;
   background-size: contain;
@@ -112,23 +126,29 @@ body {
   position: absolute;
   width: 100px;
   height: 150px;
+  left: 50%;
 }
 
 #monkey-start {
   transform: translate(-50%, -50%);
   bottom: 10px;
-  left: 50%;
 }
 
 #monkey-left {
   bottom: 250px;
-  left: 35%;
+   /* half of trunk + half of branch + half of self 
+      translate wrt center of page
+   */
+  transform: translate(-200px);
   display: none;
 }
 
 #monkey-right {
   bottom: 250px;
-  right: 35%;
+  /* half of trunk + half of branch - half of self 
+     translate wrt center of page
+  */
+  transform: translate(100px);
   display: none;
 }  
 
