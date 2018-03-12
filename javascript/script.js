@@ -66,6 +66,7 @@ function startGame() {
 
   playerScore = 0;
   $("#score").text(playerScore);
+  // $("#score").append("<div class=\"bonus-points\">+2</div>");
 
   $("#progress").width("50%");
   timeObj = {"time_left": 5000,
@@ -91,24 +92,28 @@ function showGameOver() {
 
 
 function keyUp(key) {
-  // user cue: mimic releasing of button
-  $("#" + key + "-arrow").css("transform", "scale(1)");
+  // user cue: mimic releasing of key
+  $("#" + key).css("transform", "scale(1)");
 }
 
 // main user logic
 function userAction(key) {
-  // user cue: mimic pressing of button
-  $("#" + key + "-arrow").css("transform", "scale(0.9)");
-  
+  // user cue: mimic pressing of key
+  $("#" + key).css("transform", "scale(0.8)");
+
   // check user action against last segment on first move
   // but check against second last segment on subsequent move
   if (playerScore == 0) {
-    var lastSegmentDirection = $("#tree").children().last().attr("class")
+    var lastSegmentElement = $("#tree").children().last();
   } else {
-    var lastSegmentDirection = $("#tree").children().eq(5).attr("class")
+    var lastSegmentElement = $("#tree").children().eq(5);
   }
+  var lastSegmentDirection = lastSegmentElement.attr("class") + "-arrow";
 
-  if (lastSegmentDirection == key) {
+  // returns boolean of whether banana is present
+  var presentBanana = (lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder").attr("class").split(" ").length == 2);
+  
+  if (key == lastSegmentDirection || (presentBanana && key == "spacebar")) {
     if (playerScore == 0) {
       // start timer on first move
       progress();
@@ -124,7 +129,7 @@ function userAction(key) {
     }
 
     // show and hide monkey depending on user action
-    if (key == "left") {
+    if (lastSegmentDirection == "left-arrow") {
       $("#monkey-right").hide();
       $("#monkey-left").show();
     } else {
@@ -134,6 +139,12 @@ function userAction(key) {
     
     if (playerScore > 0) {
       addRandomTreeSegmentToDom("prepend");
+    }
+    
+    if (presentBanana && key == "spacebar") {
+      // user cue: add +2 bonus
+      bubbleBonusPoints();
+      playerScore ++;
     }
     playerScore++;
     $("#score").text(playerScore);
@@ -151,10 +162,10 @@ function userAction(key) {
 $(document).keydown(function(key) {
   if (running == true) {
     if (key.which == 37) {
-      userAction("left");
+      userAction("left-arrow");
     }
     if (key.which == 39) {
-      userAction("right");
+      userAction("right-arrow");
     }
     if (key.which == 32) {
       userAction("spacebar");
@@ -165,10 +176,13 @@ $(document).keydown(function(key) {
 $(document).keyup(function(key) {
   if (running == true) {
     if (key.which == 37) {
-      keyUp("left");
+      keyUp("left-arrow");
     }
     if (key.which == 39) {
-      keyUp("right");
+      keyUp("right-arrow");
+    }
+    if (key.which == 32) {
+      keyUp("spacebar");
     }
   }
 })
@@ -176,32 +190,42 @@ $(document).keyup(function(key) {
 // if user uses mouse to play
 $("#left-arrow").on("mousedown", function() {
   if (running == true) {
-    userAction("left");
+    userAction("left-arrow");
   }
 })
 
 $("#left-arrow").on("mouseup", function() {
   if (running == true) {
-    keyUp("left");
+    keyUp("left-arrow");
   }
 })
 
 $("#right-arrow").on("mousedown", function() {
   if (running == true) {
-    userAction("right");
+    userAction("right-arrow");
   }
 })
 
 $("#right-arrow").on("mouseup", function() {
   if (running == true) {
-    keyUp("right");
+    keyUp("right-arrow");
+  }
+})
+
+$("#spacebar").on("mousedown", function() {
+  if (running == true) {
+    userAction("spacebar");
+  }
+})
+
+$("#spacebar").on("mouseup", function() {
+  if (running == true) {
+    keyUp("spacebar");
   }
 })
 
 // increase time when user makes correct move
-function increaseTime() {
-  console.log("time left from increaseTime(): " + timeObj.time_left);
-  timeObj.time_left = Math.min(timeObj.time_left + 2000, timeObj.time_total);
+function increaseTime() {  timeObj.time_left = Math.min(timeObj.time_left + 2000, timeObj.time_total);
   $("#progress").width(Math.min(100,$("#progress").width() + 10));
 }
 
@@ -224,6 +248,20 @@ function progress() {
   else {
     // showGameOver();
   }
+}
+
+function bubbleBonusPoints() {
+  console.log("appending score");
+  $("#score-wrapper").append("<div class=\"bonus-points\">+2</div>");
+  var angle = Math.floor(Math.random() * 50) + 50;
+  // animate each bonus point to the top (bottom 100%) and reduce opacity as it moves
+  // callback function used to remove complete animations
+  console.log("animating");
+  $(".bonus-points").animate({
+      "top": "-80px",
+      "left": (15 + angle) + "px",
+      "opacity" : "-=0.7"
+  }, 2000);    
 }
 
 startGame()
