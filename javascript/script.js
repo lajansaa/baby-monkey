@@ -78,10 +78,10 @@ function startGame() {
   timeObj = {"time_left": 10000,
              "time_total": 20000,
              "time_decay": 50,
-             "time_decay_user_error": 5000,
+             "time_decay_penalise_user": 5000,
              "time_decay_threshold": 30,
              "time_decay_factor": 25
-            }
+            };
   $("#progress").css("background-color", "green");
 
   $("#monkey-left, #monkey-right").hide(); 
@@ -161,7 +161,7 @@ function userAction(key) {
     } else {
       // when user misstep after the first move
       if (playerScore > 0) {
-        timeObj.time_left -= timeObj.time_decay_user_error;
+        timeObj.time_left -= timeObj.time_decay_penalise_user;
       }
     }
   } else {
@@ -174,7 +174,7 @@ function userAction(key) {
       playerScore ++;
     } else {
       // when user grabs nothing
-      timeObj.time_left -= timeObj.time_decay_user_error;
+      timeObj.time_left -= timeObj.time_decay_penalise_user;
     }
   }
 }

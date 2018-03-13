@@ -29,7 +29,7 @@ body {
   z-index: 999;
 }
 
-/* timer bar */
+/* energy bar */
 #progress-bar {
   position: absolute;
   width: 102px;
@@ -142,6 +142,19 @@ body {
   background-color: black;
   display: inline-block;
   vertical-align: top;
+}
+
+.user-keys {
+  cursor: pointer;
+}
+
+/* user cue: mimic pressing of key */
+.user-keys:hover {
+  transform: translateY(-4px);
+}
+
+.user-keys:active {
+  transform: translateY(4px);
 }
 
 #spacebar p {
