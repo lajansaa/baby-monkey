@@ -94,6 +94,11 @@ body {
   background-size: contain;
 }
 
+.rotten-banana {
+  background: url("../img/rotten_banana.jpg") no-repeat;
+  background-size: contain;
+}
+
 .empty-branch {
   width: 150px;
   height: 15px;
@@ -147,18 +152,18 @@ body {
 
 /* monkey image */
 #monkey-start, #monkey-left, #monkey-right {
-  background: url("../img/monkey-start.jpg") no-repeat;
+  background: url("../img/monkey-start.png") no-repeat;
   background-size: contain;
   margin: 0 auto;  
   position: absolute;
   width: 100px;
-  height: 150px;
+  height: 100px;
   left: 50%;
 }
 
 #monkey-start {
   transform: translate(-50%, -50%);
-  bottom: 10px;
+  bottom: 50px;
 }
 
 #monkey-left {

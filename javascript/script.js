@@ -1,7 +1,9 @@
 var running = false;
 var playerScore = 0;
-var addBananaThreshold = 20;
-var progressMin = 98;
+var addBananaThreshold = 0;
+var addRottenBananaThreshold = 40;
+var secondLastSegment = 5;
+var progressElementMaxWidth = 98;
 var level = 0;
 var timeObj;
 
@@ -13,9 +15,14 @@ function createTreeSegment(direction) {
   // randomise adding of banana class
   // only when user points passes a certain threshold
   if (playerScore > addBananaThreshold) {
-    var randomNumber = Math.floor(Math.random() * 4);
-    if (randomNumber == 0) {
+    var randomNumber = Math.floor(Math.random() * 5);
+    if (randomNumber == 0 || randomNumber == 1) {
       bananaElement.addClass("banana");
+    }
+    if (playerScore > addRottenBananaThreshold) {
+      if (randomNumber == 2) {
+        bananaElement.addClass("rotten-banana");
+      } 
     }
   }
 
@@ -68,11 +75,12 @@ function startGame() {
   $("#score").text(playerScore);
 
   $("#progress").width("50%");
-  timeObj = {"time_left": 5000,
-             "time_total": 10000,
-             "time_decay": 300,
+  timeObj = {"time_left": 10000,
+             "time_total": 20000,
+             "time_decay": 50,
+             "time_decay_user_error": 5000,
              "time_decay_threshold": 30,
-             "time_decay_factor": 50
+             "time_decay_factor": 25
             }
   $("#progress").css("background-color", "green");
 
@@ -104,60 +112,70 @@ function userAction(key) {
 
   // check user action against last segment on first move
   // but check against second last segment on subsequent move
-  if (playerScore == 0) {
+  if (playerScore == 0 || key == "spacebar") {
     var lastSegmentElement = $("#tree").children().last();
   } else {
-    var lastSegmentElement = $("#tree").children().eq(5);
+    var lastSegmentElement = $("#tree").children().eq(secondLastSegment);
   }
   var lastSegmentDirection = lastSegmentElement.attr("class") + "-arrow";
 
   // returns boolean of whether banana is present
-  var presentBanana = (lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder").attr("class").split(" ").length == 2);
-  
-  if (key == lastSegmentDirection || (presentBanana && key == "spacebar")) {
-    if (playerScore == 0) {
-      // start timer on first move
-      progress();
-      $("#monkey-start").hide();
+  var bananaPlaceholder = lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder");
+  var presentBanana = (bananaPlaceholder.attr("class").split(" ").length == 2);
+
+  // when user navigates left/right
+  if (key == "left-arrow" || key == "right-arrow") {
+    if (key == lastSegmentDirection) {
+      if (playerScore == 0) {
+        // start timer on first move
+        progress();
+        $("#monkey-start").hide();
+      } else {
+        // remove last segment on subsequent move
+        $("#tree").children().last().remove();
+      }
+
+      // increase time decay when threshold reached
+      if (playerScore % timeObj.time_decay_threshold == timeObj.time_decay_threshold - 1) {
+        timeObj.time_decay += timeObj.time_decay_factor;
+        level++;
+        flashLevel(level);
+      }
+
+      // show and hide monkey depending on user action
+      if (lastSegmentDirection == "left-arrow") {
+        $("#monkey-right").hide();
+        $("#monkey-left").show();
+      } else {
+        $("#monkey-left").hide();
+        $("#monkey-right").show();
+      }
+      
+      if (playerScore > 0) {
+        addRandomTreeSegmentToDom("prepend");
+      }
+
+      playerScore++;
+      $("#score").text(playerScore);
+
     } else {
-      // remove last segment on subsequent move
-      $("#tree").children().last().remove();
-    }
-
-    // increase time decay for every 20 points
-    if (playerScore % timeObj.time_decay_threshold == timeObj.time_decay_threshold - 1) {
-      timeObj.time_decay += timeObj.time_decay_factor;
-      level++;
-      flashLevel(level);
-    }
-
-    // show and hide monkey depending on user action
-    if (lastSegmentDirection == "left-arrow") {
-      $("#monkey-right").hide();
-      $("#monkey-left").show();
-    } else {
-      $("#monkey-left").hide();
-      $("#monkey-right").show();
-    }
-    
-    if (playerScore > 0) {
-      addRandomTreeSegmentToDom("prepend");
-    }
-    
-    if (presentBanana && key == "spacebar") {
-      // user cue: add +2 bonus
-      bubbleBonusPoints();
-      playerScore ++;
-    }
-    playerScore++;
-    $("#score").text(playerScore);
-
-    // increase time left only if it's not the max
-    if (timeObj.time_left <= timeObj.time_total) {
-      increaseTime();
+      // when user misstep after the first move
+      if (playerScore > 0) {
+        timeObj.time_left -= timeObj.time_decay_user_error;
+      }
     }
   } else {
-    // showGameOver();
+  // when user grabs banana
+    if (presentBanana) {
+      // user cue: add +2 bonus
+      bubbleBonusPoints();
+      increaseTime();
+      lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder").removeClass("banana");
+      playerScore ++;
+    } else {
+      // when user grabs nothing
+      timeObj.time_left -= timeObj.time_decay_user_error;
+    }
   }
 }
 
@@ -228,8 +246,9 @@ $("#spacebar").on("mouseup", function() {
 })
 
 // increase time when user makes correct move
-function increaseTime() {  timeObj.time_left = Math.min(timeObj.time_left + 2000, timeObj.time_total);
-  $("#progress").width(Math.min(progressMin, $("#progress").width() + 10));
+function increaseTime() {
+  timeObj.time_left = Math.min(timeObj.time_left + 2000, timeObj.time_total);
+  $("#progress").width(Math.min(progressElementMaxWidth, $("#progress").width() + 10));
 }
 
 // decrease time 
