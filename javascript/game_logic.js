@@ -14,7 +14,7 @@ function userKeyDownAction(key) {
   // and banana type
   var bananaPlaceholder = lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder");
   var bananaPlaceholderClass = bananaPlaceholder.attr("class").split(" ")
-  var bananaPresent = (bananaPlaceholderClass.length == 2);
+  var bananaPresent = (bananaPlaceholderClass.length > 1);
   var bananaType = (bananaPlaceholderClass[bananaPlaceholderClass.length - 1]);
 
   // when user navigates left/right

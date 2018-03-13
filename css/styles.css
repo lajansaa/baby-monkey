@@ -53,12 +53,10 @@ body {
 
 /* tree segments */
 .trunk {
-  width: 150px;
-  height: 80px;
+  width: 50px;
+  height: 150px;
   margin: 0 auto;
-  border-right: 5px solid black;
-  border-left: 5px solid black;
-  background-color: brown;
+  background-color: #9a4d00;
   display: inline-block;
   /* inline element displays weird behavior
      if element has no content.
@@ -68,7 +66,7 @@ body {
 }
 
 .branch-wrapper {
-  width: 150px;
+  width: 120px;
   display: inline-block;
   /* inline element displays weird behavior
      if element has no content.
@@ -78,29 +76,90 @@ body {
 }
 
 .branch {
-  width: 100%;
-  height: 15px;
-  background-color: brown;
+  width: 120px;
+  height: 50px;
+  border-bottom: 15px solid #9a4d00;
+  z-index: -2;
+  position: relative;
+}
+
+.left-branch {
+  border-bottom-left-radius: 100%;
+}
+
+.right-branch {
+  border-bottom-right-radius: 100%;
+}
+
+.leaves {
+  width: 120px;
+  height: 40px;
+  border-radius: 50px;
+  background: green;
+  position: relative;
+  display: inline-block;
+  z-index: -1;
+}
+
+.leaves:before, .leaves:after {
+  content: "";
+  background: green;
+}
+
+.leaves:before {
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  position: absolute;
+  top: -15px;
+  left: 15px;
+}
+
+.leaves:after {
+  width: 55px;
+  height: 55px;
+  border-radius: 200px;
+  position: absolute;
+  top: -25px;
+  left: 45px;
+}
+
+.leaves-right {
+  left: 40px;
+  top: 20px;
+}
+
+.leaves-left {
+  right: 40px;
+  top: 20px
 }
 
 .banana-placeholder {
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   margin: 0 auto;
 }
 
+.banana-placeholder-left {
+  transform: translate(-50px,40px);
+}
+
+.banana-placeholder-right {
+  transform: translate(50px,40px);
+}
+
 .banana {
-  background: url("../img/banana.jpg") no-repeat;
+  background: url("../img/apple-edited.png") no-repeat;
   background-size: contain;
 }
 
 .rotten-banana {
-  background: url("../img/rotten_banana.jpg") no-repeat;
+  background: url("../img/apple-rotten.png") no-repeat;
   background-size: contain;
 }
 
 .empty-branch {
-  width: 150px;
+  width: 120px;
   height: 15px;
   display: inline-block;
   /* inline element displays weird behavior
@@ -110,35 +169,31 @@ body {
   vertical-align: bottom;
 }
 
-.left-branch, .right-branch {
-  margin: 0;
-}
-
 /* user actions */
 #user-keys {
-  margin-top: 150px;
+  margin-top: 100px;
 }
 
 .arrows {
   display: inline-block;
   width: 0;
   height: 0;
-  border-top: 40px solid transparent;
-  border-bottom: 40px solid transparent;
-  margin: 0 30px;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+  margin: 0 20px;
 }
 
 #left-arrow {
-  border-right: 80px solid black;
+  border-right: 60px solid black;
 }
 
 #right-arrow {
-  border-left: 80px solid black;
+  border-left: 60px solid black;
 }
 
 #spacebar {
-  width: 300px;
-  height: 80px;
+  width: 180px;
+  height: 60px;
   background-color: black;
   display: inline-block;
   vertical-align: top;
@@ -159,7 +214,8 @@ body {
 
 #spacebar p {
   color: white;
-  line-height: 80px;
+  line-height: 60px;
+  font-size: 14px;
   margin: 0;
 }
 

@@ -1,8 +1,9 @@
 var running = false;
 var playerScore = 0;
+var initialNumOfSegments = 4;
 var addBananaThreshold = 0;
 var addRottenBananaThreshold = 40;
-var secondLastSegment = 5;
+var secondLastSegment = 2;
 var progressElementMaxWidth = 98;
 var level = 0;
 var timeObj;
@@ -25,11 +26,12 @@ function randomAddOfBanana(bananaElement) {
 
 function createTreeSegment(direction) {
   var divElement = $("<div>", {"class": direction});
+  var leavesElement = $("<div>", {"class": "leaves leaves-" + direction});
   var branchWrapperElement = $("<div>", {"class": "branch-wrapper"});
-  var bananaElement = $("<div>", {"class": "banana-placeholder"});
+  var bananaElement = $("<div>", {"class": "banana-placeholder banana-placeholder-"  + direction});
   randomAddOfBanana(bananaElement);
-  var branchElement = $("<div>", {"class": "branch"});
-  branchWrapperElement.append(bananaElement).append(branchElement);
+  var branchElement = $("<div>", {"class": "branch " + direction + "-branch"});
+  branchWrapperElement.append(bananaElement).append(leavesElement).append(branchElement);
   var emptyBranchElement = $("<div>", {"class": "empty-branch"});
   var trunkElement = $("<div>", {"class": "trunk"});
   
@@ -61,7 +63,7 @@ function addRandomTreeSegmentToDom(addBeforeOrAfter) {
 }
 
 function createInitialTree() {
-  for (var i = 0; i < 7; i++) {
+  for (var i = 0; i < initialNumOfSegments; i++) {
     addRandomTreeSegmentToDom("append");
   };
   running = true;
