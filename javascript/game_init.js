@@ -1,18 +1,19 @@
 var running = false;
-var playerScore = 0;
 var initialNumOfSegments = 4;
-var addBananaThreshold = 0;
-var addRottenBananaThreshold = 40;
+var numOfEvents = 8;
 var secondLastSegment = 2;
 var progressElementMaxWidth = 98;
-var level = 0;
-var timeObj;
+var playerScore,
+    level,
+    addBananaThreshold,
+    addRottenBananaThreshold,
+    timeObj;
 
 function randomAddOfBanana(bananaElement) {
   // randomise adding of banana class
   // only when user points passes a certain threshold
   if (playerScore > addBananaThreshold) {
-    var randomNumber = Math.floor(Math.random() * 5);
+    var randomNumber = Math.floor(Math.random() * numOfEvents);
     if (randomNumber == 0 || randomNumber == 1) {
       bananaElement.addClass("banana");
     }
@@ -73,18 +74,23 @@ function createInitialTree() {
 function startGame() {
   running = true;
   $("#tree").html("");
-  createInitialTree();
-
+  addBananaThreshold = 30;
+  addRottenBananaThreshold = 60;
   playerScore = 0;
   $("#score").text(playerScore);
+  level = 0;
+
+  createInitialTree();
 
   $("#progress").width("50%");
   timeObj = {"time_left": 10000,
              "time_total": 20000,
              "time_decay": 50,
+             "time_increase_correct_branch": 300,
+             "time_increase_fruit_pick": 1000,
              "time_decay_penalise_user": 5000,
-             "time_decay_threshold": 30,
-             "time_decay_factor": 25
+             "next_level_threshold": 20,
+             "time_decay_factor": 20
             };
   $("#progress").css("background-color", "green");
 

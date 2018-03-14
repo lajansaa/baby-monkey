@@ -27,6 +27,9 @@ body {
   top: 0;
   left: 15px;
   z-index: 999;
+  width: 100px;
+  color: gold;
+  font-weight: bold;
 }
 
 /* energy bar */

@@ -20,6 +20,7 @@ function userKeyDownAction(key) {
   // when user navigates left/right
   if (key == "left-arrow" || key == "right-arrow") {
     if (key == lastSegmentDirection) {
+      increaseTime(timeObj.time_increase_correct_branch);
       if (playerScore == 0) {
         // start timer on first move
         progress();
@@ -63,7 +64,7 @@ function userKeyDownAction(key) {
     if (bananaPresent && bananaType == "banana") {
       // user cue: add +2 bonus
       bubbleBonusPoints();
-      increaseTime();
+      increaseTime(timeObj.time_increase_fruit_pick);
       bananaPlaceholder.removeClass("banana");
       playerScore ++;
     } else {
@@ -74,16 +75,17 @@ function userKeyDownAction(key) {
 }
 
 // increase time when user makes correct move
-function increaseTime() {
-  timeObj.time_left = Math.min(timeObj.time_left + 2000, timeObj.time_total);
-  $("#progress").width(Math.min(progressElementMaxWidth, $("#progress").width() + 10));
+function increaseTime(increaseFactor) {
+  timeObj.time_left = Math.min(timeObj.time_left + increaseFactor, timeObj.time_total);
+  var progressBarIncrease = increaseFactor / timeObj.time_total * progressElementMaxWidth;
+  $("#progress").width(Math.min(progressElementMaxWidth, $("#progress").width() + progressBarIncrease));
 }
 
 // decrease time 
 function progress() {
   timeObj.time_left -= timeObj.time_decay;
-  var percentageRemain = timeObj.time_left / timeObj.time_total
-  var progressBarWidth = percentageRemain * 100;
+  var percentageRemain = timeObj.time_left / timeObj.time_total;
+  var progressBarWidth = percentageRemain * progressElementMaxWidth;
   if (percentageRemain >= 0.30) {
     $("#progress").css("background-color", "green");
   } else {
@@ -96,12 +98,12 @@ function progress() {
     }, 50);
   }
   else {
-    // showGameOver();
+    showGameOver();
   }
 }
 
 function bubbleBonusPoints() {
-  $("#score-wrapper").append("<div class=\"bonus-points\">+2</div>");
+  $("#score-wrapper").append("<div class=\"bonus-points\">x2 Time</div>");
   var angle = Math.floor(Math.random() * 50) + 50;
   // animate each bonus point to the top (bottom 100%) and reduce opacity as it moves
   // callback function used to remove complete animations

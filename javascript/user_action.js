@@ -13,6 +13,10 @@ $(document).keydown(function(key) {
       $("#spacebar").css("transform", "translateY(4px)");
       userKeyDownAction("spacebar");
     }
+  } else {
+    if (key.which == 32) {
+      startGame();
+    }
   }
 })
 
