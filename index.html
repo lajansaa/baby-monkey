@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <title>Baby Monkey</title>
@@ -15,23 +16,32 @@
     <button onClick="start()">Play!</button>
   </div> -->
   <div id="game-running">
-    <div id="progress-bar">
-      <div id="progress"></div>
-    </div>
-    <div id="score-wrapper">
-      <div id="score"></div>
-    </div>
-    <div id="tree"></div>
-    <div id="user-keys">
-      <div id="left-arrow" class="arrows user-keys"></div>
-      <div id="spacebar" class="user-keys">
-        <p>Press Spacebar to Pick Fruit</p>
+    <div class="main">
+      <div id="scrolling-bg">
+        <div id="space-bg"></div>
+        <div id="sky-bg"></div>
+        <div id="forest-bg"></div>
       </div>
-      <div id="right-arrow" class="arrows user-keys"></div>
+      <div id="progress-bar">
+        <div id="progress"></div>
+      </div>
+      <div id="score-wrapper">
+        <div id="score"></div>
+      </div>
+      <div id="tree"></div>
     </div>
-    <div id="monkey-start"></div>
-    <div id="monkey-left"></div>
-    <div id="monkey-right"></div>
+    <div>
+      <div id="monkey-start"></div>
+      <div id="monkey-left"></div>
+      <div id="monkey-right"></div>
+      <div id="user-keys">
+        <div id="left-arrow" class="arrows user-keys"></div>
+        <div id="spacebar" class="user-keys">
+          <p>Press Spacebar to Pick Fruit</p>
+        </div>
+        <div id="right-arrow" class="arrows user-keys"></div>
+      </div>
+    </div>
   </div>
   <div id="game-over">
     <h1>Game Over</h1>

@@ -1,5 +1,5 @@
 var running = false;
-var initialNumOfSegments = 4;
+var initialNumOfBranches = 3;
 var numOfEvents = 8;
 var secondLastSegment = 2;
 var progressElementMaxWidth = 98;
@@ -54,23 +54,31 @@ function createTreeSegment(direction, mainOrBackground) {
   // }
   var leavesWrapperElement = $("<div>", {"class": "leaves-wrapper"});
   var leavesElement = $("<div>", {"class": "leaves leaves-" + direction});
-  // var leavesBackgroundElement = $("<div>", {"class": "leaves-bg leaves-bg-" + direction});
-  // leavesWrapperElement.append(leavesElement).append(leavesBackgroundElement);
-  leavesWrapperElement.append(leavesElement)
+  var leavesBackgroundElement = $("<div>", {"class": "leaves-bg leaves-bg-" + direction});
+  leavesWrapperElement.append(leavesElement).append(leavesBackgroundElement);
+  // leavesWrapperElement.append(leavesElement)
+
   var branchWrapperElement = $("<div>", {"class": "branch-wrapper"});
   var bananaElement = $("<div>", {"class": "banana-placeholder banana-placeholder-"  + direction});
   randomAddOfBanana(bananaElement);
   var branchElement = $("<div>", {"class": "branch " + direction + "-branch"});
   branchWrapperElement.append(bananaElement).append(leavesWrapperElement).append(branchElement);
+  
   var emptyBranchElement = $("<div>", {"class": "empty-branch"});
+  if (direction == "empty") {
+    var emptyBranchElement2 = $("<div>", {"class": "empty-branch"});
+  }
+
   var trunkElement = $("<div>", {"class": "trunk"});
   addRidges(trunkElement);
 
   // create left or right branch
   if (direction == "left") {
     var treeSegmentElement = divElement.append([branchWrapperElement, trunkElement, emptyBranchElement]);
-  } else {
+  } else if (direction == "right") {
     var treeSegmentElement = divElement.append([emptyBranchElement, trunkElement, branchWrapperElement]);
+  } else {
+    var treeSegmentElement = divElement.append([emptyBranchElement, trunkElement, emptyBranchElement2]);
   }
   return treeSegmentElement;
 }
@@ -94,37 +102,77 @@ function addRandomTreeSegmentToDom(parentElem, addBeforeOrAfter) {
 }
 
 function createInitialTree() {
-  for (var i = 0; i < initialNumOfSegments; i++) {
+  for (var i = 0; i < initialNumOfBranches; i++) {
     addRandomTreeSegmentToDom($("#tree"), "append");
   };
+  $("#tree").append(createTreeSegment("empty", "main"));
   running = true;
 }
 
-// function createBackgroundTree(idNum, numOfSegments) {
-//   var backgroundTreeElement = $("<div>", {"id": "background-tree-" + idNum, "class": "background-tree"});
-//   for (var i = 0; i < numOfSegments; i++) {
-//     backgroundTreeElement.append(createTreeSegment("right", "background"));
-//     backgroundTreeElement.append(createTreeSegment("left", "background"));
-//   }
-//   $("#background").append(backgroundTreeElement);
-// }
+function scrollBackground() {
+  var currentBottom = parseInt($("#scrolling-bg").css("bottom").slice(0,-2));
+  var minBottom = parseInt($("#scrolling-bg").css("height").slice(0,-2)) - 600;
+  if (currentBottom > -minBottom) {
+    $("#scrolling-bg").css({bottom: "-=150px"});
+  }
+}
 
-// function createBackground() {
-//   createBackgroundTree(1, 10);
-//   createBackgroundTree(2, 4);
-//   createBackgroundTree(3, 8);
-//   // createBackgroundTree(4);
-//   $(".background-tree").children().children("div.trunk").css({"background-color":"darkolivegreen"});
-//   $(".background-tree").children().children("div.branch-wrapper").children("div.branch").css({"border-bottom-color":"darkolivegreen"});
-// }
+function createBackgroundTrunk(translateX) {
+  var backgroundTreeElement = $("<div>", {"class": "background-tree"});
+  backgroundTreeElement.css({width: randomNumBetween(15,20),
+                             height: randomNumBetween(2500,5000),
+                             opacity: Math.random() * (0.4 - 0.2) + 0.2 ,
+                             transform: "rotate(" + randomNumBetween(0,2) + "deg) translate(" + translateX + "px)"
+                            });
+  $("#forest-bg").append(backgroundTreeElement);
+}
 
+function createBackgroundCloud(translateX, translateY) {
+  var backgroundCloudElement = $("<div>", {"class": "background-cloud"});
+  var cloudSize = Math.random() * (0.6 - 0.4) + 0.4;
+  backgroundCloudElement.css({transform: "scale(" + cloudSize + ") translate(" + translateX + "px, " + translateY + "px)"
+                             });
+  $("#sky-bg").append(backgroundCloudElement);
+}
 
+function createBackgroundStar(translateX, translateY) {
+  var backgroundStarElement = $("<div>", {"class": "fa fa-star"});
+  var starSize = randomNumBetween(1, 20);
+  backgroundStarElement.css({color: "silver",
+                             "font-size": starSize + "px",
+                             transform: "translate(" + translateX + "px, " + translateY + "px)"
+                             });
+  $("#space-bg").append(backgroundStarElement);
+}
+
+function createBackground() {
+  var trunkTranslateX = 50;
+  for (var i = 0; i < window.innerWidth * 0.0095; i++) {
+    createBackgroundTrunk(trunkTranslateX);
+    trunkTranslateX += randomNumBetween(50, 100);
+  }
+  
+  var cloudTranslateY = -3500;
+  for (var i = 0; i < 12; i++) {
+    var cloudTranslateX = randomNumBetween(50,window.innerWidth);
+    createBackgroundCloud(cloudTranslateX, cloudTranslateY);
+    cloudTranslateY += 500;
+  }
+
+  var starTranslateY = 10;
+  for (var i = 0; i < 300; i++) {
+    var starTranslateX = randomNumBetween(0,1300);
+    createBackgroundStar(starTranslateX, starTranslateY);
+    starTranslateY += 10;
+  }
+}
 
 // start or reset game
 function startGame() {
   running = true;
   $("#tree").html("");
-  $("#background").html("");
+  $("#forest-bg, #sky-bg, #space-bg").html("");
+  $("#scrolling-bg").css("bottom", "0px");
   addBananaThreshold = 30;
   addRottenBananaThreshold = 60;
   playerScore = 0;
@@ -132,7 +180,7 @@ function startGame() {
   level = 0;
 
   createInitialTree();
-  // createBackground();
+  createBackground();
 
   $("#progress").width("50%");
   timeObj = {"time_left": 10000,

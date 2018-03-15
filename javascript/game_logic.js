@@ -3,32 +3,30 @@ function userKeyDownAction(key) {
   // check user action against last segment on first move
   // or when trying to pick banana
   // but check against second last segment on subsequent move
-  if (playerScore == 0 || key == "spacebar") {
-    var lastSegmentElement = $("#tree").children().last();
-  } else {
-    var lastSegmentElement = $("#tree").children().eq(secondLastSegment);
-  }
-  var lastSegmentDirection = lastSegmentElement.attr("class") + "-arrow";
+  var lastSegmentElement = $("#tree").children().last();
+  var secondLastSegmentElement = $("#tree").children().eq(secondLastSegment);
+  var secondLastSegmentDirection = secondLastSegmentElement.attr("class") + "-arrow";
 
   // return banana present true/false
   // and banana type
-  var bananaPlaceholder = lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder");
-  var bananaPlaceholderClass = bananaPlaceholder.attr("class").split(" ")
-  var bananaPresent = (bananaPlaceholderClass.length > 1);
-  var bananaType = (bananaPlaceholderClass[bananaPlaceholderClass.length - 1]);
+  if (key == "spacebar") {
+    var bananaPlaceholder = lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder");
+    var bananaPlaceholderClass = bananaPlaceholder.attr("class").split(" ");
+    var bananaPresent = (bananaPlaceholderClass.length > 1);
+    var bananaType = (bananaPlaceholderClass[bananaPlaceholderClass.length - 1]);
+  }
 
   // when user navigates left/right
   if (key == "left-arrow" || key == "right-arrow") {
-    if (key == lastSegmentDirection) {
+    if (key == secondLastSegmentDirection) {
       increaseTime(timeObj.time_increase_correct_branch);
+      scrollBackground();
       if (playerScore == 0) {
         // start timer on first move
         progress();
         $("#monkey-start").hide();
-      } else {
-        // remove last segment on subsequent move
-        $("#tree").children().last().remove();
-      }
+      } 
+      lastSegmentElement.remove();
 
       // increase time decay when threshold reached
       if (playerScore % timeObj.next_level_threshold == timeObj.next_level_threshold - 1) {
@@ -38,7 +36,7 @@ function userKeyDownAction(key) {
       }
 
       // show and hide monkey depending on user action
-      if (lastSegmentDirection == "left-arrow") {
+      if (secondLastSegmentDirection == "left-arrow") {
         $("#monkey-right").hide();
         $("#monkey-left").show();
       } else {
@@ -46,9 +44,7 @@ function userKeyDownAction(key) {
         $("#monkey-right").show();
       }
       
-      if (playerScore > 0) {
-        addRandomTreeSegmentToDom($("#tree"), "prepend");
-      }
+      addRandomTreeSegmentToDom($("#tree"), "prepend");
 
       playerScore++;
       $("#score").text(playerScore);
@@ -98,7 +94,7 @@ function progress() {
     }, 50);
   }
   else {
-    // showGameOver();
+    showGameOver();
   }
 }
 
