@@ -47,7 +47,7 @@ function userKeyDownAction(key) {
       }
       
       if (playerScore > 0) {
-        addRandomTreeSegmentToDom("prepend");
+        addRandomTreeSegmentToDom($("#tree"), "prepend");
       }
 
       playerScore++;
@@ -98,7 +98,7 @@ function progress() {
     }, 50);
   }
   else {
-    showGameOver();
+    // showGameOver();
   }
 }
 

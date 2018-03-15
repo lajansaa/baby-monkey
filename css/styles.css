@@ -55,17 +55,42 @@ body {
 }
 
 /* tree segments */
+#tree {
+  position: relative;
+  z-index: 1;
+  left: 50%;
+  transform: translate(-50%);
+}
+
 .trunk {
   width: 50px;
   height: 150px;
   margin: 0 auto;
   background-color: #9a4d00;
   display: inline-block;
+  position: relative;
   /* inline element displays weird behavior
      if element has no content.
      user vertical-align to control alignment
   */
   vertical-align: bottom;
+  box-shadow: 8px 0 2px 0 rgba(0, 0, 0, 0.2)
+}
+
+.trunk:before {
+  content: "";
+  width: 25px;
+  height: 150px;
+  background-color: black;
+  opacity: 0.1;
+  position: absolute;
+}
+
+.ridges {
+  border-bottom: 5px solid rgba(0, 0, 0, 0.2);
+  position: absolute;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;
 }
 
 .branch-wrapper {
@@ -94,11 +119,15 @@ body {
   border-bottom-right-radius: 100%;
 }
 
+.leave-wrapper {
+  position: absolute;
+}
+
 .leaves {
   width: 120px;
   height: 40px;
   border-radius: 50px;
-  background: green;
+  background: darkgreen;
   position: relative;
   display: inline-block;
   z-index: -1;
@@ -106,12 +135,13 @@ body {
 
 .leaves:before, .leaves:after {
   content: "";
-  background: green;
+  background: darkgreen;
+  z-index: -99;
 }
 
 .leaves:before {
   width: 50px;
-  height: 50px;
+  height: 80px;
   border-radius: 100px;
   position: absolute;
   top: -15px;
@@ -120,11 +150,11 @@ body {
 
 .leaves:after {
   width: 55px;
-  height: 55px;
+  height: 90px;
   border-radius: 200px;
   position: absolute;
   top: -25px;
-  left: 45px;
+  left: 50px;
 }
 
 .leaves-right {
@@ -174,7 +204,11 @@ body {
 
 /* user actions */
 #user-keys {
-  margin-top: 100px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  bottom: -200px;
 }
 
 .arrows {
@@ -235,25 +269,27 @@ body {
 
 #monkey-start {
   transform: translate(-50%, -50%);
-  bottom: 50px;
+  bottom: -150px;
 }
 
 #monkey-left {
-  bottom: 250px;
+  bottom: 16px;
    /* half of trunk + half of branch + half of self 
       translate wrt center of page
    */
-  transform: translate(-200px);
+  transform: translate(-100px);
   display: none;
+  z-index: 1;
 }
 
 #monkey-right {
-  bottom: 250px;
+  bottom: 16px;
   /* half of trunk + half of branch - half of self 
      translate wrt center of page
   */
-  transform: translate(100px);
+  transform: translate(30px);
   display: none;
+  z-index: 1;
 }  
 
 #game-over {
