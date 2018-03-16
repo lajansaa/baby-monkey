@@ -5,16 +5,17 @@
   <link rel="stylesheet" type="text/css" href="css/styles.css">
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <title>Baby Monkey</title>
 </head>
 <body>
-  <!-- <div id="game-start">
+  <audio id="bg-audio" src="the_simple_complex.mp3" loop="loop"></audio>
+  <div id="game-start">
     <h1>Baby Monkey</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit similique explicabo provident perspiciatis, vero animi facere non, ducimus, sint omnis illum atque sunt distinctio, dolore voluptate laudantium nemo quo possimus.</p>
-    <button onClick="start()">Play!</button>
-  </div> -->
+    <button class="play-button" onClick="startGame()">Play!</button>
+  </div>
   <div id="game-running">
     <div class="main">
       <div id="scrolling-bg">
@@ -46,7 +47,7 @@
   <div id="game-over">
     <h1>Game Over</h1>
     <p id="final-score"></p>
-    <button onClick="startGame()">Reset</button>
+    <button class="reset-button" onClick="startGame()">Reset</button>
   </div>
   <script type="text/javascript" src="javascript/game_init.js"></script>
   <script type="text/javascript" src="javascript/user_action.js"></script>

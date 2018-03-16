@@ -1,4 +1,5 @@
 var running = false;
+var bgAudioElement = $("#bg-audio").get(0);
 var initialNumOfBranches = 3;
 var numOfEvents = 8;
 var secondLastSegment = 2;
@@ -204,7 +205,14 @@ function startGame() {
 // show user score
 function showGameOver() {
   running = false;
+  bgAudioElement.pause();
+  bgAudioElement.currentTime = 0;
   $("#game-running").hide();
   $("#final-score").text("Your Score: " + playerScore);
   $("#game-over").show();
 }
+
+// var player = new Audio();
+// player.type = "audio/mpeg";
+// player.src = "../the_simple_complex.mp3";
+// player.play();

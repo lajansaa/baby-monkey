@@ -12,6 +12,33 @@ body {
   overflow:hidden;
 }
 
+h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 100px;
+  line-height: 100vh;
+  margin: 0;
+}
+
+.play-button, .reset-button {
+  position: absolute;
+  top: 70%;
+  font-size: 20px;
+  width: 100px;
+  height: 50px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: mediumseagreen;;
+  border: none;
+  color: white;
+  box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.1);
+}
+
+.play-button:hover {
+  transform: scale(1.2);
+  outline: none;
+  border: none;
+}
+
 #scrolling-bg {
   position: absolute;
   height: 15000px;
@@ -387,6 +414,11 @@ body {
   z-index: 1;
 }  
 
-#game-over {
+/*#game-start {
+  background: url("../img/forest_bg_2.jpg") no-repeat;
+  background-size: cover;
+}*/
+
+#game-running, #game-over {
   display: none;
 }

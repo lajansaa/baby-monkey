@@ -22,6 +22,7 @@ function userKeyDownAction(key) {
       increaseTime(timeObj.time_increase_correct_branch);
       scrollBackground();
       if (playerScore == 0) {
+        bgAudioElement.play();
         // start timer on first move
         progress();
         $("#monkey-start").hide();
@@ -122,4 +123,4 @@ function flashLevel(level) {
   }, 1000);
 }
 
-startGame()
+// startGame()
