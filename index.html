@@ -13,8 +13,10 @@
 <body>
   <audio id="bg-audio" src="the_simple_complex.mp3" loop="loop"></audio>
   <div id="game-start">
-    <h1>Baby Monkey</h1>
-    <button class="play-button" onClick="startGame()">Play!</button>
+    <div class="landing">
+      <h1>Baby Monkey</h1>
+      <button class="play-button" onClick="startGame()">Play!</button>
+    </div>
   </div>
   <div id="game-running">
     <div class="main">
@@ -31,7 +33,7 @@
       </div>
       <div id="tree"></div>
     </div>
-    <div>
+    <div class="controls">
       <div id="monkey-start"></div>
       <div id="monkey-left"></div>
       <div id="monkey-right"></div>

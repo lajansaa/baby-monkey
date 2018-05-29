@@ -12,22 +12,40 @@ body {
   overflow:hidden;
 }
 
+.landing {
+  width: 50%;
+  height: 80%;
+  background-color: white;
+  opacity: 0.8;
+  margin: 0px auto;
+  text-align: center;
+  padding-top: 50px;
+}
+
 h1 {
   font-family: 'Roboto', sans-serif;
-  font-size: 100px;
-  line-height: 100vh;
-  margin: 0;
+  font-size: 3.5rem;
+  margin: 0
+}
+
+#game-start {
+  background: url("../img/forest_bg.jpg") no-repeat;
+  background-size: cover;
+  height: 100vh;
+  padding-top: 100px;
+}
+
+#game-running, #game-over {
+  display: none;
 }
 
 .play-button, .reset-button {
-  position: absolute;
-  top: 70%;
   font-size: 20px;
   width: 100px;
   height: 50px;
   padding: 10px 20px;
   border-radius: 10px;
-  background-color: mediumseagreen;;
+  background-color: mediumseagreen;
   border: none;
   color: white;
   box-shadow: 8px 8px 5px rgba(0, 0, 0, 0.1);
@@ -87,6 +105,12 @@ h1 {
   position: relative;
   height: 600px;
   width: 100%;
+}
+
+.controls {
+  height: 200px;
+  width: 100%;
+  position: relative;
 }
 
 /* background */
@@ -389,36 +413,27 @@ h1 {
   background-size: contain;
   margin: 0 auto;  
   position: absolute;
-  width: 100px;
+  width: 72px;
   height: 100px;
   left: 50%;
 }
 
 #monkey-start {
   transform: translate(-50%, -50%);
-  bottom: 150px;
+  bottom: 148px;
   z-index: 1;
 }
 
 #monkey-left {
-  bottom: 270px;
+  bottom: 266px;
   transform: translate(-100px);
   display: none;
   z-index: 1;
 }
 
 #monkey-right {
-  bottom: 270px;
+  bottom: 266px;
   transform: translate(30px);
   display: none;
   z-index: 1;
 }  
-
-/*#game-start {
-  background: url("../img/forest_bg_2.jpg") no-repeat;
-  background-size: cover;
-}*/
-
-#game-running, #game-over {
-  display: none;
-}
