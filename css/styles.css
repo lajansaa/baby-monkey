@@ -12,7 +12,7 @@ body {
   overflow:hidden;
 }
 
-.landing {
+.home {
   width: 50%;
   height: 80%;
   background-color: white;
@@ -28,7 +28,7 @@ h1 {
   margin: 0
 }
 
-#game-start {
+#game-start, #game-over {
   background: url("../img/forest_bg.jpg") no-repeat;
   background-size: cover;
   height: 100vh;
@@ -57,6 +57,20 @@ h1 {
   border: none;
 }
 
+.main {
+  overflow: hidden;
+  position: relative;
+  height: 600px;
+  width: 100%;
+}
+
+.controls {
+  height: 200px;
+  width: 100%;
+  position: relative;
+}
+
+/* background */
 #scrolling-bg {
   position: absolute;
   height: 15000px;
@@ -100,20 +114,6 @@ h1 {
   top: -90px;
 }
 
-.main {
-  overflow: hidden;
-  position: relative;
-  height: 600px;
-  width: 100%;
-}
-
-.controls {
-  height: 200px;
-  width: 100%;
-  position: relative;
-}
-
-/* background */
 .background-tree {
   position: absolute;
   bottom: 0;
@@ -139,7 +139,7 @@ h1 {
   font-weight: bold;
 }
 
-/* energy bar */
+/* progress bar */
 #progress-bar {
   position: absolute;
   width: 102px;
@@ -159,6 +159,10 @@ h1 {
   height: 100%;
   width: 50%;
   background-color: green;
+}
+
+.level, #score {
+  color: white;
 }
 
 /* tree segments */

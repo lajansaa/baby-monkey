@@ -13,7 +13,7 @@
 <body>
   <audio id="bg-audio" src="the_simple_complex.mp3" loop="loop"></audio>
   <div id="game-start">
-    <div class="landing">
+    <div class="home">
       <h1>Baby Monkey</h1>
       <button class="play-button" onClick="startGame()">Play!</button>
     </div>
@@ -47,9 +47,11 @@
     </div>
   </div>
   <div id="game-over">
-    <h1>Game Over</h1>
-    <p id="final-score"></p>
-    <button class="reset-button" onClick="startGame()">Reset</button>
+    <div class="home">
+      <h1>Game Over</h1>
+      <p id="final-score"></p>
+      <button class="reset-button" onClick="startGame()">Reset</button>
+    </div>
   </div>
   <script type="text/javascript" src="javascript/game_init.js"></script>
   <script type="text/javascript" src="javascript/user_action.js"></script>

@@ -37,8 +37,6 @@ function addRidges(trunkElement) {
     var widthHeight = randomNumBetween(10,13);
     ridgesElement.css({"width": widthHeight,
                        "height": widthHeight,
-                       // "border-bottom-right-radius": randomNumBetween(70,100) + "px",
-                       // "border-bottom-left-radius": randomNumBetween(70,100) + "px",
                        "transform": "translate(" + randomNumBetween(1,20) + "px," + translateY + "px)"
                       })
     trunkElement.append(ridgesElement);
@@ -48,16 +46,10 @@ function addRidges(trunkElement) {
 
 function createTreeSegment(direction, mainOrBackground) {
   var divElement = $("<div>", {"class": direction});
-  // if (mainOrBackground == "main") {
-  //   var leavesElement = $("<div>", {"class": "leaves leaves-" + direction});
-  // } else {
-  //   var leavesElement = $("<div>", {"class": "leaves-bg leaves-bg-" + direction});
-  // }
   var leavesWrapperElement = $("<div>", {"class": "leaves-wrapper"});
   var leavesElement = $("<div>", {"class": "leaves leaves-" + direction});
   var leavesBackgroundElement = $("<div>", {"class": "leaves-bg leaves-bg-" + direction});
   leavesWrapperElement.append(leavesElement).append(leavesBackgroundElement);
-  // leavesWrapperElement.append(leavesElement)
 
   var branchWrapperElement = $("<div>", {"class": "branch-wrapper"});
   var bananaElement = $("<div>", {"class": "banana-placeholder banana-placeholder-"  + direction});
@@ -211,8 +203,3 @@ function showGameOver() {
   $("#final-score").text("Your Score: " + playerScore);
   $("#game-over").show();
 }
-
-// var player = new Audio();
-// player.type = "audio/mpeg";
-// player.src = "../the_simple_complex.mp3";
-// player.play();

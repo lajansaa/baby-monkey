@@ -122,5 +122,3 @@ function flashLevel(level) {
     });
   }, 1000);
 }
-
-// startGame()

@@ -14,7 +14,7 @@ $(document).keydown(function(key) {
       userKeyDownAction("spacebar");
     }
   } else {
-    if (key.which == 32) {
+    if (key.which == 13) {
       startGame();
     }
   }
