@@ -1,7 +1,7 @@
 var running = false;
 var playerScore = 0;
-var addBananaThreshold = 0;
-var addRottenBananaThreshold = 40;
+var addAppleThreshold = 0;
+var addRottenAppleThreshold = 40;
 var secondLastSegment = 5;
 var progressElementMaxWidth = 98;
 var level = 0;
@@ -10,24 +10,24 @@ var timeObj;
 function createTreeSegment(direction) {
   var divElement = $("<div>", {"class": direction});
   var branchWrapperElement = $("<div>", {"class": "branch-wrapper"});
-  var bananaElement = $("<div>", {"class": "banana-placeholder"});
+  var appleElement = $("<div>", {"class": "apple-placeholder"});
   
-  // randomise adding of banana class
+  // randomise adding of apple class
   // only when user points passes a certain threshold
-  if (playerScore > addBananaThreshold) {
+  if (playerScore > addAppleThreshold) {
     var randomNumber = Math.floor(Math.random() * 5);
     if (randomNumber == 0 || randomNumber == 1) {
-      bananaElement.addClass("banana");
+      appleElement.addClass("apple");
     }
-    if (playerScore > addRottenBananaThreshold) {
+    if (playerScore > addRottenAppleThreshold) {
       if (randomNumber == 2) {
-        bananaElement.addClass("rotten-banana");
+        appleElement.addClass("rotten-apple");
       } 
     }
   }
 
   var branchElement = $("<div>", {"class": "branch"});
-  branchWrapperElement.append(bananaElement).append(branchElement);
+  branchWrapperElement.append(appleElement).append(branchElement);
   var emptyBranchElement = $("<div>", {"class": "empty-branch"});
   var trunkElement = $("<div>", {"class": "trunk"});
   
@@ -119,9 +119,9 @@ function userAction(key) {
   }
   var lastSegmentDirection = lastSegmentElement.attr("class") + "-arrow";
 
-  // returns boolean of whether banana is present
-  var bananaPlaceholder = lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder");
-  var presentBanana = (bananaPlaceholder.attr("class").split(" ").length == 2);
+  // returns boolean of whether apple is present
+  var applePlaceholder = lastSegmentElement.children(".branch-wrapper").children(".apple-placeholder");
+  var presentApple = (applePlaceholder.attr("class").split(" ").length == 2);
 
   // when user navigates left/right
   if (key == "left-arrow" || key == "right-arrow") {
@@ -165,12 +165,12 @@ function userAction(key) {
       }
     }
   } else {
-  // when user grabs banana
-    if (presentBanana) {
+  // when user grabs apple
+    if (presentApple) {
       // user cue: add +2 bonus
       bubbleBonusPoints();
       increaseTime();
-      lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder").removeClass("banana");
+      lastSegmentElement.children(".branch-wrapper").children(".apple-placeholder").removeClass("apple");
       playerScore ++;
     } else {
       // when user grabs nothing

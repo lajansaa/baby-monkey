@@ -321,27 +321,27 @@ h1 {
   top: -35px;
 }
 
-.banana-placeholder {
+.apple-placeholder {
   width: 30px;
   height: 30px;
   margin: 0 auto;
 }
 
-.banana-placeholder-left {
+.apple-placeholder-left {
   transform: translate(-50px,-5px);
 }
 
-.banana-placeholder-right {
+.apple-placeholder-right {
   transform: translate(50px,-5px);
 }
 
-.banana {
+.apple {
   background: url("../img/apple-edited.png") no-repeat;
   background-size: contain;
   z-index: 999;
 }
 
-.rotten-banana {
+.rotten-apple {
   background: url("../img/apple-rotten.png") no-repeat;
   background-size: contain;
 }

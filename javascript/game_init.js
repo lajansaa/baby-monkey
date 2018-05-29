@@ -6,21 +6,21 @@ var secondLastSegment = 2;
 var progressElementMaxWidth = 98;
 var playerScore,
     level,
-    addBananaThreshold,
-    addRottenBananaThreshold,
+    addAppleThreshold,
+    addRottenAppleThreshold,
     timeObj;
 
-function randomAddOfBanana(bananaElement) {
-  // randomise adding of banana class
+function randomAddOfApple(appleElement) {
+  // randomise adding of apple class
   // only when user points passes a certain threshold
-  if (playerScore > addBananaThreshold) {
+  if (playerScore > addAppleThreshold) {
     var randomNumber = Math.floor(Math.random() * numOfEvents);
     if (randomNumber == 0 || randomNumber == 1) {
-      bananaElement.addClass("banana");
+      appleElement.addClass("apple");
     }
-    if (playerScore > addRottenBananaThreshold) {
+    if (playerScore > addRottenAppleThreshold) {
       if (randomNumber == 2) {
-        bananaElement.addClass("rotten-banana");
+        appleElement.addClass("rotten-apple");
       } 
     }
   }
@@ -52,10 +52,10 @@ function createTreeSegment(direction, mainOrBackground) {
   leavesWrapperElement.append(leavesElement).append(leavesBackgroundElement);
 
   var branchWrapperElement = $("<div>", {"class": "branch-wrapper"});
-  var bananaElement = $("<div>", {"class": "banana-placeholder banana-placeholder-"  + direction});
-  randomAddOfBanana(bananaElement);
+  var appleElement = $("<div>", {"class": "apple-placeholder apple-placeholder-"  + direction});
+  randomAddOfApple(appleElement);
   var branchElement = $("<div>", {"class": "branch " + direction + "-branch"});
-  branchWrapperElement.append(bananaElement).append(leavesWrapperElement).append(branchElement);
+  branchWrapperElement.append(appleElement).append(leavesWrapperElement).append(branchElement);
   
   var emptyBranchElement = $("<div>", {"class": "empty-branch"});
   if (direction == "empty") {
@@ -166,8 +166,8 @@ function startGame() {
   $("#tree").html("");
   $("#forest-bg, #sky-bg, #space-bg").html("");
   $("#scrolling-bg").css("bottom", "0px");
-  addBananaThreshold = 30;
-  addRottenBananaThreshold = 60;
+  addAppleThreshold = 30;
+  addRottenAppleThreshold = 60;
   playerScore = 0;
   $("#score").text(playerScore);
   level = 0;

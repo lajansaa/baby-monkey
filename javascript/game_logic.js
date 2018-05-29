@@ -1,19 +1,19 @@
 // main user logic
 function userKeyDownAction(key) {
   // check user action against last segment on first move
-  // or when trying to pick banana
+  // or when trying to pick apple
   // but check against second last segment on subsequent move
   var lastSegmentElement = $("#tree").children().last();
   var secondLastSegmentElement = $("#tree").children().eq(secondLastSegment);
   var secondLastSegmentDirection = secondLastSegmentElement.attr("class") + "-arrow";
 
-  // return banana present true/false
-  // and banana type
+  // return apple present true/false
+  // and apple type
   if (key == "spacebar") {
-    var bananaPlaceholder = lastSegmentElement.children(".branch-wrapper").children(".banana-placeholder");
-    var bananaPlaceholderClass = bananaPlaceholder.attr("class").split(" ");
-    var bananaPresent = (bananaPlaceholderClass.length > 1);
-    var bananaType = (bananaPlaceholderClass[bananaPlaceholderClass.length - 1]);
+    var applePlaceholder = lastSegmentElement.children(".branch-wrapper").children(".apple-placeholder");
+    var applePlaceholderClass = applePlaceholder.attr("class").split(" ");
+    var applePresent = (applePlaceholderClass.length > 1);
+    var appleType = (applePlaceholderClass[applePlaceholderClass.length - 1]);
   }
 
   // when user navigates left/right
@@ -57,15 +57,15 @@ function userKeyDownAction(key) {
       }
     }
   } else {
-  // when user grabs banana
-    if (bananaPresent && bananaType == "banana") {
+  // when user grabs apple
+    if (applePresent && appleType == "apple") {
       // user cue: add +2 bonus
       bubbleBonusPoints();
       increaseTime(timeObj.time_increase_fruit_pick);
-      bananaPlaceholder.removeClass("banana");
+      applePlaceholder.removeClass("apple");
       playerScore ++;
     } else {
-      // when user grabs nothing or rotten banana
+      // when user grabs nothing or rotten apple
       timeObj.time_left -= timeObj.time_decay_penalise_user;
     }
   }
