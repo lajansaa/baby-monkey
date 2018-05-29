@@ -113,7 +113,7 @@ function scrollBackground() {
 function createBackgroundTrunk(translateX) {
   var backgroundTreeElement = $("<div>", {"class": "background-tree"});
   backgroundTreeElement.css({width: randomNumBetween(15,20),
-                             height: randomNumBetween(2500,5000),
+                             height: randomNumBetween(100,5000),
                              opacity: Math.random() * (0.4 - 0.2) + 0.2 ,
                              transform: "rotate(" + randomNumBetween(0,2) + "deg) translate(" + translateX + "px)"
                             });
@@ -132,9 +132,16 @@ function createBackgroundStar(translateX, translateY) {
   var backgroundStarElement = $("<div>", {"class": "fa fa-star"});
   var starSize = randomNumBetween(1, 20);
   backgroundStarElement.css({color: "silver",
+                             display: "block",
+                             "text-align": "left",
                              "font-size": starSize + "px",
                              transform: "translate(" + translateX + "px, " + translateY + "px)"
                              });
+  fadeInDelay = randomNumBetween(0, 1500);
+  fadeOutDelay = 10;
+  (function pulse(){
+        backgroundStarElement.delay(fadeInDelay).animate({'opacity': 0.2}).delay(fadeOutDelay).animate({'opacity': 1}, pulse);
+    })();
   $("#space-bg").append(backgroundStarElement);
 }
 
@@ -147,14 +154,14 @@ function createBackground() {
   
   var cloudTranslateY = -3500;
   for (var i = 0; i < 12; i++) {
-    var cloudTranslateX = randomNumBetween(50,window.innerWidth);
+    var cloudTranslateX = randomNumBetween(0, window.innerWidth);
     createBackgroundCloud(cloudTranslateX, cloudTranslateY);
     cloudTranslateY += 500;
   }
 
   var starTranslateY = 10;
-  for (var i = 0; i < 300; i++) {
-    var starTranslateX = randomNumBetween(0,1300);
+  for (var i = 0; i < 150; i++) {
+    var starTranslateX = randomNumBetween(0, window.innerWidth - 20);
     createBackgroundStar(starTranslateX, starTranslateY);
     starTranslateY += 10;
   }
@@ -166,7 +173,8 @@ function startGame() {
   $("#tree").html("");
   $("#forest-bg, #sky-bg, #space-bg").html("");
   $("#scrolling-bg").css("bottom", "0px");
-  addBananaThreshold = 30;
+  // addBananaThreshold = 30;
+  addBananaThreshold = 0;
   addRottenBananaThreshold = 60;
   playerScore = 0;
   $("#score").text(playerScore);
@@ -179,6 +187,7 @@ function startGame() {
   timeObj = {"time_left": 10000,
              "time_total": 20000,
              "time_decay": 50,
+             // "time_decay_max": 130,
              "time_increase_correct_branch": 300,
              "time_increase_fruit_pick": 1000,
              "time_decay_penalise_user": 5000,

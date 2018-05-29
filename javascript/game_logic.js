@@ -22,7 +22,7 @@ function userKeyDownAction(key) {
       increaseTime(timeObj.time_increase_correct_branch);
       scrollBackground();
       if (playerScore == 0) {
-        bgAudioElement.play();
+        // bgAudioElement.play();
         // start timer on first move
         progress();
         $("#monkey-start").hide();
@@ -31,7 +31,9 @@ function userKeyDownAction(key) {
 
       // increase time decay when threshold reached
       if (playerScore % timeObj.next_level_threshold == timeObj.next_level_threshold - 1) {
-        timeObj.time_decay += timeObj.time_decay_factor;
+        // if (timeObj.time_decay < timeObj.time_decay) {
+        //   timeObj.time_decay += timeObj.time_decay_factor;
+        // }
         level++;
         flashLevel(level);
       }
