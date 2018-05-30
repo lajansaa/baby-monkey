@@ -1,8 +1,11 @@
-Play it here: https://lajansaa.github.io/game-project/
+# [Baby Monkey](https://lajansaa.github.io/baby-monkey/)
 
-Problem Statement:
-Baby Monkey needs to get back home before the sun sets. It would be great if he manages to pick up some fruits along the way for supper.
+## Description
 
-Solution:
-Navigate Baby Monkey as he climbs the tree. Earn extra points by grabbing fruits along the way. 
+__How to play?__\
+Navigate Baby Monkey up a tree by clicking on the left or right arrows before time runs out. Gain extra time by grabbing fruits (spacebar) along the way.
 
+__How is it built?__\
+_Tech Stack_:
+- HTML, CSS, jQuery
+- localStorage to keep score
