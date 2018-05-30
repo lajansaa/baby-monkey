@@ -15,7 +15,12 @@
   <div id="game-start">
     <div class="home">
       <h1>Baby Monkey</h1>
-      <button class="play-button" onClick="startGame()">Play!</button>
+      <p id="final-score"></p>
+      <div id="score-board"></div>
+      <div id="name-input">
+        <input id="user-name" type="text" name="name" placeholder="Name" required>
+        <button class="play-button" onClick="startGame()">Play</button>
+      </div>
     </div>
   </div>
   <div id="game-running">
@@ -46,14 +51,7 @@
       </div>
     </div>
   </div>
-  <div id="game-over">
-    <div class="home">
-      <h1>Game Over</h1>
-      <p id="final-score"></p>
-      <button class="reset-button" onClick="startGame()">Reset</button>
-    </div>
-  </div>
-  <script type="text/javascript" src="javascript/game_init.js"></script>
+  <script type="text/javascript" src="javascript/game_setup.js"></script>
   <script type="text/javascript" src="javascript/user_action.js"></script>
   <script type="text/javascript" src="javascript/game_logic.js"></script>
 </body>

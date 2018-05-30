@@ -14,12 +14,29 @@ body {
 
 .home {
   width: 50%;
-  height: 80%;
+  height: 800px;
   background-color: white;
   opacity: 0.8;
   margin: 0px auto;
   text-align: center;
   padding-top: 50px;
+  position: relative;
+}
+
+table {
+  display: inline-block;
+  font-size: 20px;
+}
+
+table td, table th {
+  padding: 8px;
+}
+
+table th {
+  padding: 12px 0;
+  background-color: mediumseagreen;
+  color: white;
+  width: 100px;
 }
 
 h1 {
@@ -28,18 +45,29 @@ h1 {
   margin: 0
 }
 
-#game-start, #game-over {
+#game-start {
   background: url("../img/forest_bg.jpg") no-repeat;
   background-size: cover;
   height: 100vh;
   padding-top: 100px;
 }
 
-#game-running, #game-over {
+#game-running {
   display: none;
 }
 
-.play-button, .reset-button {
+#name-input {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#final-score {
+  font-size: 30px;
+}
+
+.play-button {
   font-size: 20px;
   width: 100px;
   height: 50px;
@@ -76,7 +104,7 @@ h1 {
   height: 15000px;
   bottom: 0;
   width: 100%;
-  background: linear-gradient(to top, darkseagreen, darkseagreen 33%, skyblue 66%, black 100%);
+  background: linear-gradient(to top, darkseagreen 33%, skyblue 66%, black 100%);
 }
 
 #space-bg, #sky-bg, #forest-bg {

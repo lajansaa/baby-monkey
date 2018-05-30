@@ -131,7 +131,8 @@ function createBackgroundCloud(translateX, translateY) {
 function createBackgroundStar(translateX, translateY) {
   var backgroundStarElement = $("<div>", {"class": "fa fa-star"});
   var starSize = randomNumBetween(1, 20);
-  backgroundStarElement.css({color: "silver",
+  backgroundStarElement.css({display: "flex",
+                             color: "silver",
                              "font-size": starSize + "px",
                              transform: "translate(" + translateX + "px, " + translateY + "px)"
                              });
@@ -145,16 +146,16 @@ function createBackground() {
     trunkTranslateX += randomNumBetween(50, 100);
   }
   
-  var cloudTranslateY = -3500;
-  for (var i = 0; i < 12; i++) {
+  var cloudTranslateY = -2500;
+  for (var i = 0; i < 14; i++) {
     var cloudTranslateX = randomNumBetween(50,window.innerWidth);
     createBackgroundCloud(cloudTranslateX, cloudTranslateY);
     cloudTranslateY += 500;
   }
 
   var starTranslateY = 10;
-  for (var i = 0; i < 300; i++) {
-    var starTranslateX = randomNumBetween(0,1300);
+  for (var i = 0; i < 200; i++) {
+    var starTranslateX = randomNumBetween(0,window.innerWidth);
     createBackgroundStar(starTranslateX, starTranslateY);
     starTranslateY += 10;
   }
@@ -190,8 +191,41 @@ function startGame() {
   $("#monkey-left, #monkey-right").hide(); 
   $("#monkey-start").show();   
 
-  $("#game-start, #game-over").hide();
+  $("#game-start").hide();
   $("#game-running").show();
+}
+
+function createScoreBoard() {
+  var scoreObj = localStorage;
+  var scoreArr = Object.keys(scoreObj).map(function(key) {
+                   return { key: key, value: this[key] };
+                 }, scoreObj);
+  scoreArr.sort(function(e1, e2) { return e2.value - e1.value; });
+  var topTen = scoreArr.slice(0, 10);
+  console.log(topTen)
+  var scoreBoard = `<table>
+                      <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                      </tr>
+                    `
+  for (var i = 0; i < topTen.length; i++) {
+    scoreBoard += `<tr>
+                    <td>` + (i+1) + `</td>` +
+                   `<td>` + topTen[i].key + `</td> 
+                    <td>` + topTen[i].value + `</td>
+                   </tr>`
+  }
+  scoreBoard += `</table>`
+  $("#score-board").html(scoreBoard);
+}
+
+function setPlayerScore() {
+  var previousScore = localStorage.getItem($("#user-name").val());
+  if (playerScore > previousScore) {
+    localStorage.setItem($("#user-name").val(), playerScore);
+  }
 }
 
 // show user score
@@ -201,5 +235,9 @@ function showGameOver() {
   bgAudioElement.currentTime = 0;
   $("#game-running").hide();
   $("#final-score").text("Your Score: " + playerScore);
-  $("#game-over").show();
+  setPlayerScore(playerScore);
+  createScoreBoard();
+  $("#game-start").show();
 }
+
+createScoreBoard();
