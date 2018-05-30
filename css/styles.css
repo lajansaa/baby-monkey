@@ -14,13 +14,19 @@ body {
 
 .home {
   width: 50%;
-  height: 800px;
+  height: 80%;
+  min-height: 500px;
   background-color: white;
   opacity: 0.8;
   margin: 0px auto;
   text-align: center;
   padding-top: 50px;
-  position: relative;
+}
+
+#score-board {
+  height: 60%;
+  overflow: scroll;
+  margin-bottom: 10px;
 }
 
 table {
@@ -54,13 +60,6 @@ h1 {
 
 #game-running {
   display: none;
-}
-
-#name-input {
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  transform: translate(-50%);
 }
 
 #final-score {
